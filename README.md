@@ -1,0 +1,147 @@
+# LX Coop Fixes
+
+**Split-screen stability for B42.21**
+
+![LX Coop Fixes](42/poster.png)
+
+> The crashes, the stutter and the broken aiming that only show up when two people share one screen.
+
+`Project Zomboid B42.21+` · `v1.2.0` · `CC0`
+
+[English](#english) · [Español](#español)
+
+---
+
+## English
+
+This mod is part of the **LX Split-Screen Suite**, seven mods that make Project Zomboid B42 playable in 2–4 player couch co-op, with or without a gamepad. Each one stands alone — install only what you need.
+
+### Why split-screen?
+
+Split-screen is the mode that carries the most bugs in stable B42 — and the mods worth playing with, like Bandits and Project A-Life, are built for singleplayer and online multiplayer. Nobody is fixing couch co-op. This suite exists to close that gap: to make split-screen as playable as the modes that get the attention.
+
+### Why gamepad?
+
+B42 keeps improving controller support, but it is still rough, and the aim-and-shoot rework left gunplay on a gamepad close to unusable — you cannot even shoot a zombie lying on the ground. Split-screen *with* a gamepad is the worst case the game offers. These mods give PZ back an aim that was designed for a stick: assist on the vertical axis, B41-style lock-on, per-player aim state, and a lot more.
+
+### What it does
+
+- **Vehicle crash while driving** — `BaseVehicle.update()` dereferences a null chunk when the previous chunk unloads — which happens constantly in split-screen, because two players pull chunks in and out at once. The game closes or hangs. The fix re-registers the vehicle in the chunk it is actually in, exactly like vanilla would an instant later.
+- **Player 2 could not aim** — Several aiming routines convert the reticle position with the *global* current player's camera instead of the weapon owner's. For player 2 that meant the aim ray was cast from player 1's camera and never found the zombie: no green circle, no target lock, no hit chance. Each player now aims through their own camera.
+- **Player 2+ had no reticle at all** — `CombatManager.update()` only ever refreshes player 1's reticle, so players 2–4 never got hit chance, reticle colours, or the “target found” state that makes the reticle stick to a zombie. They do now.
+- **Stutter with the map or minimap open** — The unexplored-area fog lives in one texture covering the whole loaded world — 4096×4096 RGBA, 64 MB, on a world with distant modded maps. Every time anyone walks into an unexplored block, the game re-uploads all 64 MB. With two players exploring that is every few seconds. Now only the changed rows go up, a few KB instead of 64 MB. Same picture, no freeze.
+- **Error spam in the log** — `IsoTree.isPlayerInsideARoom` throws a null-pointer exception every frame in some houses, `LungeState` throws when a zombie is exactly on top of its target, and building with a controller asks for a texture named `null`. All three are silenced at the source.
+- **Lost Lock Picking XP** — The Lock Picking Skill mod asks the game for a sandbox multiplier that does not exist for modded skills, which throws and swallows the XP. Now the XP lands either way.
+
+### Requirements
+
+| Mod | Workshop | |
+|---|---|---|
+| ZombieBuddy | [3619862853](https://steamcommunity.com/sharedfiles/filedetails/?id=3619862853) | required |
+| Lock Picking Skill (B42) | [3774467540](https://steamcommunity.com/sharedfiles/filedetails/?id=3774467540) | optional |
+
+**Load order:** load this **after** `ZombieBuddy`, `Cf_LockpickingSkill`. `mod.info` already declares it.
+
+### Installing
+
+**From the Steam Workshop (recommended)**
+Subscribe on the Workshop page. Steam downloads it; then start Project Zomboid, go to
+**Mods** in the main menu and enable it. In split-screen, enabling it once covers all players.
+
+**Manually**
+1. Download this repository (green **Code** button -> **Download ZIP**) and unzip it.
+2. Copy the folder `LX_CoopFixes` into your Zomboid mods folder:
+   - Windows: `C:\Users\<you>\Zomboid\mods\`
+   - Linux: `~/Zomboid/mods/`
+   - macOS: `~/Library/Application Support/Zomboid/mods/`
+   The result must be `...\Zomboid\mods\LX_CoopFixes\42\mod.info`.
+3. Start the game, open **Mods** in the main menu and enable **LX Coop Fixes**.
+
+### Notes
+
+- Every patch is guarded: on any unexpected state it steps aside and the game runs exactly as vanilla. Nothing here changes balance or gameplay.
+- The map fog optimisation disables itself after repeated errors and falls back to the game's own full upload.
+- Needs [ZombieBuddy](https://steamcommunity.com/sharedfiles/filedetails/?id=3619862853) 2.3.0+ to load its Java patches. No loose class files are installed.
+
+### License
+
+**CC0 1.0 Universal** — public domain dedication. Do whatever you want with it: copy it, change it, put it in a modpack, publish it, sell it. No permission needed, no credit required (though it is always welcome). See `LICENSE`.
+
+### The rest of the suite
+
+- [LX Split Aim](https://github.com/litoxperaloca/LX_SplitAim) — Controller aim assist and B41-style lock-on, per local player.
+- [LX Split-Screen Quick Build](https://github.com/litoxperaloca/LX_SPLITSCREEN_CONTEXTMENU_BUILDING) — B41-style build menu in the context menu, because B42's window does not fit.
+- [LX A-Life Split-Screen Fix](https://github.com/litoxperaloca/LX_ALifeSplit) — Project A-Life NPCs react to every local player, not just player 1.
+- [LX Bandits Split-Screen Fix](https://github.com/litoxperaloca/LX_BanditsSplit) — Bandits target the right player, companions follow who recruited them.
+- [LX Split-Screen Welcome Package](https://github.com/litoxperaloca/LX_SPLITSCREEN_WELCOME_PACKAGE) — A configurable starter kit per local character.
+- [LX Split-Screen Skills Boost](https://github.com/litoxperaloca/LX_SPLITSCREEN_SKILLS_IMPROVE) — A configurable skill floor per local character.
+
+---
+
+## Español
+
+> Los crashes, los tirones y el apuntado roto que solo aparecen cuando dos personas comparten una pantalla.
+
+Este mod es parte de la **LX Split-Screen Suite**, siete mods que hacen jugable Project Zomboid B42 en coop de sillón de 2 a 4 jugadores, con o sin mando. Cada uno funciona por separado — instalá solo lo que precises.
+
+### ¿Por qué pantalla dividida?
+
+Es la modalidad con más bugs en la B42 estable — y los mods que valen la pena, como Bandits y Project A-Life, están pensados para un jugador y multijugador online. Nadie arregla el coop de sillón. Esta suite existe para cerrar esa brecha: dejar la pantalla dividida a la par de las modalidades que sí reciben atención.
+
+### ¿Por qué mando?
+
+La B42 viene mejorando el soporte de mando, pero todavía deja mucho que desear, y el rework de apuntado y disparo dejó el tiroteo con mando casi imposible — ni siquiera podés dispararle a un zombi en el suelo. Pantalla dividida *con* mando es el peor escenario posible del juego. Estos mods le devuelven a PZ un apuntado pensado para stick: asistencia en el eje vertical, fijado de blanco estilo B41, estado de apuntado por jugador, y bastante más.
+
+### Qué hace
+
+- **Crash de vehículos al manejar** — `BaseVehicle.update()` usa un chunk nulo cuando el chunk anterior se descarga — algo que en pantalla dividida pasa todo el tiempo, porque dos jugadores cargan y descargan chunks a la vez. El juego se cierra o se cuelga. El arreglo re-registra el vehículo en el chunk donde está realmente, igual que haría el juego un instante después.
+- **El jugador 2 no podía apuntar** — Varias rutinas de apuntado convierten la posición del retículo con la cámara del jugador actual *global* en vez de la del dueño del arma. Para el jugador 2 eso significaba que el rayo salía de la cámara del jugador 1 y nunca encontraba al zombi: sin círculo verde, sin fijado, sin probabilidad de acierto. Ahora cada jugador apunta con su propia cámara.
+- **El jugador 2+ no tenía retículo** — `CombatManager.update()` solo actualiza el retículo del jugador 1, así que los jugadores 2 a 4 nunca veían probabilidad de acierto, colores del retículo, ni el estado de “blanco encontrado” que hace que el retículo se pegue al zombi. Ahora sí.
+- **Tirones con el mapa o el minimapa abierto** — La niebla de zonas no visitadas vive en una sola textura que cubre todo el mundo cargado — 4096×4096 RGBA, 64 MB, en un mundo con mapas modded lejanos. Cada vez que alguien entra en un bloque sin explorar, el juego vuelve a subir los 64 MB completos. Con dos jugadores explorando eso pasa cada pocos segundos. Ahora suben solo las filas que cambiaron, unos KB en vez de 64 MB. Misma imagen, sin congelamiento.
+- **Spam de errores en el log** — `IsoTree.isPlayerInsideARoom` lanza una excepción de puntero nulo en cada cuadro en algunas casas, `LungeState` falla cuando un zombi queda exactamente sobre su objetivo, y construir con mando pide una textura llamada `null`. Los tres quedan silenciados en el origen.
+- **XP de forzado de cerraduras que se perdía** — El mod Lock Picking Skill le pide al juego un multiplicador de sandbox que no existe para habilidades de mods, lo que falla y se traga la XP. Ahora la XP se suma igual.
+
+### Requisitos
+
+| Mod | Workshop | |
+|---|---|---|
+| ZombieBuddy | [3619862853](https://steamcommunity.com/sharedfiles/filedetails/?id=3619862853) | obligatorio |
+| Lock Picking Skill (B42) | [3774467540](https://steamcommunity.com/sharedfiles/filedetails/?id=3774467540) | opcional |
+
+**Orden de carga:** cargá este **después** de `ZombieBuddy`, `Cf_LockpickingSkill`. El `mod.info` ya lo declara.
+
+### Instalación
+
+**Desde el Steam Workshop (recomendado)**
+Suscribite en la página del Workshop. Steam lo descarga solo; después abrí Project Zomboid,
+andá a **Mods** en el menú principal y activalo. En pantalla dividida, con activarlo una vez
+alcanza para todos los jugadores.
+
+**A mano**
+1. Descargá este repositorio (botón verde **Code** -> **Download ZIP**) y descomprimilo.
+2. Copiá la carpeta `LX_CoopFixes` a tu carpeta de mods de Zomboid:
+   - Windows: `C:\Users\<vos>\Zomboid\mods\`
+   - Linux: `~/Zomboid/mods/`
+   - macOS: `~/Library/Application Support/Zomboid/mods/`
+   Tiene que quedar `...\Zomboid\mods\LX_CoopFixes\42\mod.info`.
+3. Abrí el juego, entrá a **Mods** en el menú principal y activá **LX Coop Fixes**.
+
+### Notas
+
+- Cada parche tiene guardas: ante cualquier estado inesperado se hace a un lado y el juego corre exactamente como vanilla. Nada de acá cambia balance ni jugabilidad.
+- La optimización de la niebla del mapa se desactiva sola si acumula errores y vuelve a la subida completa del juego.
+- Necesita [ZombieBuddy](https://steamcommunity.com/sharedfiles/filedetails/?id=3619862853) 2.3.0+ para cargar sus parches Java. No instala clases sueltas.
+
+### Licencia
+
+**CC0 1.0 Universal** — dedicado al dominio público. Hacé lo que quieras: copialo, cambialo, metélo en un modpack, publicalo, vendelo. No hace falta permiso ni crédito (aunque siempre se agradece). Ver `LICENSE`.
+
+### El resto de la suite
+
+- [LX Split Aim](https://github.com/litoxperaloca/LX_SplitAim) — Asistencia de apuntado con mando y fijado de blanco estilo B41, por jugador local.
+- [LX Split-Screen Quick Build](https://github.com/litoxperaloca/LX_SPLITSCREEN_CONTEXTMENU_BUILDING) — Menú de construcción estilo B41 en el menú contextual, porque la ventana de B42 no entra.
+- [LX A-Life Split-Screen Fix](https://github.com/litoxperaloca/LX_ALifeSplit) — Los NPCs de Project A-Life reaccionan a todos los jugadores locales, no solo al 1.
+- [LX Bandits Split-Screen Fix](https://github.com/litoxperaloca/LX_BanditsSplit) — Los bandidos apuntan al jugador correcto, los compañeros siguen a quien los reclutó.
+- [LX Split-Screen Welcome Package](https://github.com/litoxperaloca/LX_SPLITSCREEN_WELCOME_PACKAGE) — Un equipo inicial configurable por personaje local.
+- [LX Split-Screen Skills Boost](https://github.com/litoxperaloca/LX_SPLITSCREEN_SKILLS_IMPROVE) — Un piso de habilidades configurable por personaje local.
+
