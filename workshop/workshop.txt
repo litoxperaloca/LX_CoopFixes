@@ -64,6 +64,8 @@ description=[b]Лицензия:[/b] CC0 1.0 - общественное дост
 description=[b]Полное описание на английском, испанском и русском:[/b] [url=https://github.com/litoxperaloca/LX_CoopFixes]GitHub[/url]
 description=
 description=[hr][/hr]
+description=[b]If these mods made your co-op run work, you can buy me a coffee:[/b] [url=https://ko-fi.com/litoxperaloca]ko-fi.com/litoxperaloca[/url]
+description=
 description=[b]More in the LX Splitscreen & Gamepad Mods suite:[/b]
 description=[list]
 description=[*]LX Split Aim — Controller Aim Assist [B42]
