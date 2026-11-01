@@ -61,7 +61,7 @@ Subscribe on the Workshop page. Steam downloads it; then start Project Zomboid, 
 
 - Every patch is guarded: on any unexpected state it steps aside and the game runs exactly as vanilla. Nothing here changes balance or gameplay.
 - The map fog optimisation disables itself after repeated errors and falls back to the game's own full upload.
-- Needs [ZombieBuddy](https://steamcommunity.com/sharedfiles/filedetails/?id=3619862853) 2.3.0+ to load its Java patches. No loose class files are installed.
+- Needs [ZombieBuddy](https://steamcommunity.com/sharedfiles/filedetails/?id=3619862853) 2.3.0+ to load its Java patches. No loose class files are installed. The first time you launch with it, ZombieBuddy shows a dialog naming this mod's JAR and its SHA-256, and loads nothing until you approve it: that is ZombieBuddy doing its job, not an error. Tick remember so it stops asking. If you run ZombieBuddy with policy=deny-new, approve it there first or the JAR is skipped in silence.
 
 ### License
 
@@ -131,7 +131,7 @@ alcanza para todos los jugadores.
 
 - Cada parche tiene guardas: ante cualquier estado inesperado se hace a un lado y el juego corre exactamente como vanilla. Nada de acá cambia balance ni jugabilidad.
 - La optimización de la niebla del mapa se desactiva sola si acumula errores y vuelve a la subida completa del juego.
-- Necesita [ZombieBuddy](https://steamcommunity.com/sharedfiles/filedetails/?id=3619862853) 2.3.0+ para cargar sus parches Java. No instala clases sueltas.
+- Necesita [ZombieBuddy](https://steamcommunity.com/sharedfiles/filedetails/?id=3619862853) 2.3.0+ para cargar sus parches Java. No instala clases sueltas. La primera vez que arranques con el, ZombieBuddy muestra un dialogo con el JAR de este mod y su SHA-256, y no carga nada hasta que lo apruebes: eso es ZombieBuddy haciendo su trabajo, no un error. Tilda recordar para que no pregunte mas. Si usas ZombieBuddy con policy=deny-new, aprobalo ahi primero o el JAR se saltea en silencio.
 
 ### Licencia
 

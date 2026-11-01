@@ -18,3 +18,7 @@ out/
 _attic/
 _claude_work/
 _scratch/
+
+# Claves de firma: NUNCA deben entrar al repo
+*.der
+*-private.*

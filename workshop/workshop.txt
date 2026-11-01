@@ -16,6 +16,7 @@ description=[*][b]Lost Lock Picking XP[/b] - The Lock Picking Skill mod asks the
 description=[/list]
 description=[b]Requires:[/b] [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3619862853]ZombieBuddy[/url], [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3774467540]Lock Picking Skill (B42)[/url] (optional)
 description=[b]Load it AFTER[/b] ZombieBuddy, Cf_LockpickingSkill.
+description=[b]!![/b] First launch: ZombieBuddy asks you to approve this mod's JAR by its SHA-256 before loading it. That is normal - tick remember so it stops asking.
 description=[b]Install:[/b] Subscribe, then enable it under Mods in the main menu. In split-screen, enabling it once covers every player.
 description=[b]License:[/b] CC0 1.0 - public domain. Do anything you want with it, no permission needed.
 description=[b]Full details in English, Spanish and Russian:[/b] [url=https://github.com/litoxperaloca/LX_CoopFixes]GitHub[/url]
@@ -36,6 +37,7 @@ description=[*][b]XP de forzado de cerraduras que se perdía[/b] - El mod Lock P
 description=[/list]
 description=[b]Requiere:[/b] [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3619862853]ZombieBuddy[/url], [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3774467540]Lock Picking Skill (B42)[/url] (opcional)
 description=[b]Cargá este DESPUÉS de[/b] ZombieBuddy, Cf_LockpickingSkill.
+description=[b]!![/b] Primer arranque: ZombieBuddy te pide aprobar el JAR de este mod por su SHA-256 antes de cargarlo. Es normal, tilda recordar para que no pregunte mas.
 description=[b]Instalación:[/b] Suscribite y activalo en Mods, en el menú principal. En pantalla dividida, con activarlo una vez alcanza para todos.
 description=[b]Licencia:[/b] CC0 1.0 - dominio público. Hacé lo que quieras, sin pedir permiso.
 description=[b]Detalle completo en inglés, español y ruso:[/b] [url=https://github.com/litoxperaloca/LX_CoopFixes]GitHub[/url]
@@ -56,6 +58,7 @@ description=[*][b]Потерянный опыт взлома замков[/b] - 
 description=[/list]
 description=[b]Требует:[/b] [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3619862853]ZombieBuddy[/url], [url=https://steamcommunity.com/sharedfiles/filedetails/?id=3774467540]Lock Picking Skill (B42)[/url] (необязательно)
 description=[b]Загружать ПОСЛЕ[/b] ZombieBuddy, Cf_LockpickingSkill.
+description=[b]!![/b] Первый запуск: ZombieBuddy попросит одобрить JAR этого мода по его SHA-256. Это нормально.
 description=[b]Установка:[/b] Подпишитесь и включите мод в разделе Моды главного меню. При разделённом экране достаточно одного раза для всех.
 description=[b]Лицензия:[/b] CC0 1.0 - общественное достояние. Делайте что угодно, разрешение не нужно.
 description=[b]Полное описание на английском, испанском и русском:[/b] [url=https://github.com/litoxperaloca/LX_CoopFixes]GitHub[/url]
