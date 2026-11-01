@@ -1,4 +1,4 @@
-name=LX Coop Fixes (split-screen stability, B42.21)
+name=LX Split-Screen Co-op Fixes [B42]
 id=LX_CoopFixes
 author=litoxperaloca
 description=[EN] Fixes for B42.21 bugs that show up in split-screen. Stops the vehicle crash (BaseVehicle.update with a null chunk) that closes the game while driving. Gives player 2+ their own camera for aiming, so the green reticle, the aim ray and target tracking finally work for them. Removes the stutter with the map or minimap open: the unexplored-area fog is uploaded row by row instead of re-uploading a 64 MB texture every few seconds. Silences the error spam from IsoTree, LungeState and null textures. Recovers the Lock Picking XP that was being lost. Every patch is guarded: on any unexpected state it steps aside and the game runs vanilla. Requires ZombieBuddy.
