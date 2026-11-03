@@ -6,7 +6,7 @@
 
 > The crashes, the stutter and the broken aiming that only show up when two people share one screen.
 
-`Project Zomboid B42.21+` · `v1.2.0` · `CC0`
+`Project Zomboid B42.21+` · `v1.3.0` · `CC0`
 
 [English](#english) · [Español](#español) · [Русский](#русский)
 
@@ -32,6 +32,7 @@ B42 keeps improving controller support, but it is still rough, and the aim-and-s
 - **Stutter with the map or minimap open** — The unexplored-area fog lives in one texture covering the whole loaded world — 4096×4096 RGBA, 64 MB, on a world with distant modded maps. Every time anyone walks into an unexplored block, the game re-uploads all 64 MB. With two players exploring that is every few seconds. Now only the changed rows go up, a few KB instead of 64 MB. Same picture, no freeze.
 - **Error spam in the log** — `IsoTree.isPlayerInsideARoom` throws a null-pointer exception every frame in some houses, `LungeState` throws when a zombie is exactly on top of its target, and building with a controller asks for a texture named `null`. All three are silenced at the source.
 - **Lost Lock Picking XP** — The Lock Picking Skill mod asks the game for a sandbox multiplier that does not exist for modded skills, which throws and swallows the XP. Now the XP lands either way.
+- **Menus and dialogs stayed on the other player's half** — Context menus never knew about split-screen at all. ISContextMenu.lua does not hold a single reference to the player's viewport in its 1237 lines: it measures and clips everything against the whole window, so a long menu overflowed into the other player's half, and a submenu folded to the left only at the window's RIGHT EDGE - which for player 1 never happens, so their submenus invaded player 2's half instead of folding. Menus now measure, fold and clamp against the half of whoever opened them, and this hit our own LX Split-Screen Quick Build hardest, because it generates the longest and deepest menus in the suite. Long scrolling dialogs had the same problem: B42.21 already centres ISModalDialog and ISTextBox on the right player, so nothing is touched there, but ISModalRichText re-measures every frame against the whole window and pins itself to the window's top edge, so player 2's dialog jumped onto player 1's screen the moment it grew.
 
 ### Requirements
 
@@ -106,6 +107,7 @@ La B42 viene mejorando el soporte de mando, pero todavía deja mucho que desear,
 - **Tirones con el mapa o el minimapa abierto** — La niebla de zonas no visitadas vive en una sola textura que cubre todo el mundo cargado — 4096×4096 RGBA, 64 MB, en un mundo con mapas modded lejanos. Cada vez que alguien entra en un bloque sin explorar, el juego vuelve a subir los 64 MB completos. Con dos jugadores explorando eso pasa cada pocos segundos. Ahora suben solo las filas que cambiaron, unos KB en vez de 64 MB. Misma imagen, sin congelamiento.
 - **Spam de errores en el log** — `IsoTree.isPlayerInsideARoom` lanza una excepción de puntero nulo en cada cuadro en algunas casas, `LungeState` falla cuando un zombi queda exactamente sobre su objetivo, y construir con mando pide una textura llamada `null`. Los tres quedan silenciados en el origen.
 - **XP de forzado de cerraduras que se perdía** — El mod Lock Picking Skill le pide al juego un multiplicador de sandbox que no existe para habilidades de mods, lo que falla y se traga la XP. Ahora la XP se suma igual.
+- **Los menus y los dialogos se iban a la mitad del otro jugador** — Los menus contextuales nunca supieron que existe la pantalla dividida. ISContextMenu.lua no tiene una sola referencia al viewport del jugador en sus 1237 lineas: mide y recorta todo contra la ventana entera, asi que un menu largo se derramaba en la mitad del otro, y un submenu se plegaba a la izquierda solo al chocar con el BORDE DERECHO de la ventana, cosa que para el jugador 1 no pasa nunca, asi que sus submenus invadian la mitad del jugador 2 en vez de plegarse. Ahora los menus se miden, se pliegan y se recortan contra la mitad de quien los abrio, y esto nos pegaba a nosotros mas que a nadie: LX Split-Screen Quick Build genera los menus mas largos y profundos de la suite. Los dialogos largos con scroll tenian el mismo problema: B42.21 ya centra ISModalDialog e ISTextBox en el jugador correcto, asi que ahi no se toca nada, pero ISModalRichText se vuelve a medir cada frame contra la ventana entera y se pega al borde superior, asi que el dialogo del jugador 2 se le iba a la pantalla del jugador 1 apenas crecia.
 
 ### Requisitos
 
@@ -181,6 +183,7 @@ B42 продолжает улучшать поддержку контролле�
 - **Подтормаживания при открытой карте или миникарте** — Туман неисследованных зон хранится в одной текстуре, покрывающей весь загруженный мир — 4096×4096 RGBA, 64 МБ, на мире с далёкими модовыми картами. Каждый раз, когда кто-то заходит в неисследованный блок, игра заново загружает все 64 МБ. При двух исследующих игроках это происходит каждые несколько секунд. Теперь отправляются только изменившиеся строки — несколько КБ вместо 64 МБ. Картинка та же, подвисаний нет.
 - **Поток ошибок в логе** — `IsoTree.isPlayerInsideARoom` выбрасывает исключение каждый кадр в некоторых домах, `LungeState` падает, когда зомби стоит ровно на своей цели, а строительство с геймпада запрашивает текстуру с именем `null`. Все три случая устранены в источнике.
 - **Потерянный опыт взлома замков** — Мод Lock Picking Skill запрашивает у игры множитель песочницы, которого для модовых навыков не существует, из-за чего происходит ошибка и опыт теряется. Теперь опыт начисляется в любом случае.
+- **Меню и диалоги заезжали на половину другого игрока** — Контекстные меню вообще не знали о разделённом экране. В ISContextMenu.lua нет ни одной ссылки на область игрока на все 1237 строк: он измеряет и обрезает всё относительно всего окна, поэтому длинное меню переливалось на половину другого игрока, а подменю складывалось влево только у ПРАВОГО КРАЯ окна, чего у первого игрока не бывает никогда. Теперь меню измеряются, складываются и обрезаются по половине того, кто их открыл, и сильнее всего это било по нашему же LX Split-Screen Quick Build, который создаёт самые длинные меню набора. У длинных диалогов с прокруткой была та же беда: B42.21 уже центрирует ISModalDialog и ISTextBox правильно, там ничего не трогается, но ISModalRichText каждый кадр пересчитывается относительно всего окна и прижимается к его верхнему краю, поэтому диалог второго игрока уезжал на экран первого, едва начав расти.
 
 ### Требования
 
